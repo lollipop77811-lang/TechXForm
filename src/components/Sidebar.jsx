@@ -1,4 +1,4 @@
-import { SECTIONS } from '../data/formSchema';
+// SECTIONS import removed — we use visibleSections prop instead
 
 const iconMap = {
   user: (
@@ -58,7 +58,7 @@ const iconMap = {
   ),
 };
 
-export default function Sidebar({ currentSection, onSectionClick, getSectionCompletion }) {
+export default function Sidebar({ currentSection, onSectionClick, getSectionCompletion, visibleSections }) {
   return (
     <div className="w-full lg:w-72 shrink-0">
       <div className="lg:sticky lg:top-6">
@@ -66,11 +66,11 @@ export default function Sidebar({ currentSection, onSectionClick, getSectionComp
           {/* Sidebar header */}
           <div className="px-4 py-3 bg-[#673ab7]">
             <h3 className="text-xs font-medium text-white/90 uppercase tracking-wider">
-              Sections
+              Sections ({visibleSections.length})
             </h3>
           </div>
           <nav className="p-1">
-            {SECTIONS.map((section, index) => {
+            {visibleSections.map((section, index) => {
               const { filled, total } = getSectionCompletion(section);
               const isActive = currentSection === index;
               const isComplete = filled === total && total > 0;

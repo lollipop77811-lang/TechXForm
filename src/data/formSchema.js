@@ -1,12 +1,26 @@
 // Form schema defining all 61 questions across 11 sections
 // Based on the "Client Onboarding & Project Details" Google Form
 
+// Mapping: which service selections show which sections
+// null = always visible (client-info, services, project-overview)
+export const SERVICE_SECTION_MAP = {
+  'website-credentials': ['Website Development', 'Ecommerce Website Development'],
+  'app-credentials': ['Mobile App Development'],
+  'social-media': ['Social Media Marketing'],
+  'youtube-access': ['YouTube SEO'],
+  'ads-credentials': ['Google Ads'],
+  'software-credentials': ['Software Development'],
+  'design-requirements': ['Brochure & Logo Design'],
+  'data-access': ['Data Analytics', 'Search Engine Optimization'],
+};
+
 export const SECTIONS = [
   {
     id: 'client-info',
     title: 'Client Information',
     icon: 'user',
     description: 'Basic client contact details',
+    dependsOnServices: null,
     fields: [
       { id: 'clientName', label: 'Client Name', type: 'text', required: true, placeholder: 'Enter your full name' },
       { id: 'companyName', label: 'Company Name', type: 'text', required: true, placeholder: 'Enter your company name' },
@@ -20,6 +34,7 @@ export const SECTIONS = [
     title: 'Services Required',
     icon: 'briefcase',
     description: 'Select the services you need',
+    dependsOnServices: null,
     fields: [
       {
         id: 'servicesRequired',
@@ -47,6 +62,7 @@ export const SECTIONS = [
     title: 'Project Overview',
     icon: 'clipboard',
     description: 'Tell us about your project',
+    dependsOnServices: null,
     fields: [
       { id: 'projectDescription', label: 'Describe your project', type: 'textarea', required: true, placeholder: 'Provide a detailed description of your project...' },
       { id: 'businessAbout', label: 'What is your business about?', type: 'textarea', required: false, placeholder: 'Tell us about your business...' },
@@ -59,6 +75,7 @@ export const SECTIONS = [
     title: 'Website Credentials',
     icon: 'globe',
     description: 'Provide your website access details',
+    dependsOnServices: ['Website Development', 'Ecommerce Website Development'],
     fields: [
       { id: 'domainProvider', label: 'Domain Provider', type: 'text', required: false, placeholder: 'e.g. GoDaddy, Namecheap' },
       { id: 'domainLoginEmail', label: 'Domain Login Email', type: 'email', required: false, placeholder: 'Domain login email' },
@@ -92,6 +109,7 @@ export const SECTIONS = [
     title: 'App Credentials',
     icon: 'smartphone',
     description: 'Mobile app access details',
+    dependsOnServices: ['Mobile App Development'],
     fields: [
       {
         id: 'appType',
@@ -124,6 +142,7 @@ export const SECTIONS = [
     title: 'Social Media Credentials',
     icon: 'share',
     description: 'Social media account details',
+    dependsOnServices: ['Social Media Marketing'],
     fields: [
       {
         id: 'platformsRequired',
@@ -150,6 +169,7 @@ export const SECTIONS = [
     title: 'YouTube Access',
     icon: 'play',
     description: 'YouTube channel details',
+    dependsOnServices: ['YouTube SEO'],
     fields: [
       { id: 'channelName', label: 'Channel Name', type: 'text', required: false, placeholder: 'Your YouTube channel name' },
       { id: 'channelUrl', label: 'Channel URL', type: 'url', required: false, placeholder: 'https://youtube.com/@yourchannel' },
@@ -162,6 +182,7 @@ export const SECTIONS = [
     title: 'Ads Credentials',
     icon: 'target',
     description: 'Google Ads account details',
+    dependsOnServices: ['Google Ads'],
     fields: [
       { id: 'googleAdsCustomerId', label: 'Google Ads Customer ID', type: 'text', required: false, placeholder: 'e.g. 123-456-7890' },
       {
@@ -180,6 +201,7 @@ export const SECTIONS = [
     title: 'Software Credentials',
     icon: 'code',
     description: 'Software and API access details',
+    dependsOnServices: ['Software Development'],
     fields: [
       { id: 'existingSoftwareUrl', label: 'Existing Software URL', type: 'url', required: false, placeholder: 'https://your-software.com' },
       { id: 'softwareAdminUrl', label: 'Admin Panel URL', type: 'url', required: false, placeholder: 'https://your-software.com/admin' },
@@ -194,6 +216,7 @@ export const SECTIONS = [
     title: 'Design Requirements',
     icon: 'palette',
     description: 'Branding and design preferences',
+    dependsOnServices: ['Brochure & Logo Design'],
     fields: [
       { id: 'brandName', label: 'Brand Name', type: 'text', required: false, placeholder: 'Your brand name' },
       { id: 'tagline', label: 'Tagline', type: 'text', required: false, placeholder: 'Your brand tagline' },
@@ -208,6 +231,7 @@ export const SECTIONS = [
     title: 'Data Access',
     icon: 'database',
     description: 'Data sources and analytics tools',
+    dependsOnServices: ['Data Analytics', 'Search Engine Optimization'],
     fields: [
       {
         id: 'dataSource',
@@ -251,6 +275,16 @@ export const getInitialFormData = () => {
     });
   });
   return data;
+};
+
+// Get visible sections based on selected services
+export const getVisibleSections = (selectedServices) => {
+  return SECTIONS.filter((section) => {
+    if (!section.dependsOnServices) return true; // always visible
+    return section.dependsOnServices.some((service) =>
+      (selectedServices || []).includes(service)
+    );
+  });
 };
 
 // Count total fields

@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { SECTIONS } from '../data/formSchema';
-
-export default function SuccessModal({ formData, onClose, onReset }) {
+export default function SuccessModal({ formData, onClose, onReset, visibleSections }) {
   const [showDetails, setShowDetails] = useState(false);
 
   const formatValue = (key, value) => {
@@ -47,7 +45,7 @@ export default function SuccessModal({ formData, onClose, onReset }) {
 
         {showDetails && (
           <div className="border-t border-[#dadce0] p-6">
-            {SECTIONS.map((section) => (
+            {visibleSections.map((section) => (
               <div key={section.id} className="mb-5 last:mb-0">
                 <h4 className="text-xs font-medium text-[#673ab7] uppercase tracking-wider mb-2">
                   {section.title}

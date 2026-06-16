@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { SECTIONS } from './data/formSchema';
+import { useState, useCallback, useMemo } from 'react';
+import { SECTIONS, getVisibleSections } from './data/formSchema';
 import { useFormState } from './hooks/useFormState';
 import Sidebar from './components/Sidebar';
 import ProgressBar from './components/ProgressBar';
@@ -22,23 +22,38 @@ function App() {
     resetForm,
   } = useFormState();
 
-  const section = SECTIONS[currentSection];
+  // Compute visible sections based on selected services
+  const visibleSections = useMemo(() => {
+    const selected = formData.servicesRequired || [];
+    return getVisibleSections(selected);
+  }, [formData.servicesRequired]);
+
+  // Make sure currentSection is valid when sections change
+  const safeCurrentSection = Math.min(currentSection, visibleSections.length - 1);
+  const section = visibleSections[safeCurrentSection];
+
+  // When services change, clamp the current section index
+  const handleSectionClick = useCallback((index) => {
+    if (index < visibleSections.length) {
+      setCurrentSection(index);
+    }
+  }, [visibleSections.length]);
 
   const goNext = useCallback(() => {
     if (validateSection(section)) {
-      if (currentSection < SECTIONS.length - 1) {
-        setCurrentSection((prev) => prev + 1);
+      if (safeCurrentSection < visibleSections.length - 1) {
+        setCurrentSection(safeCurrentSection + 1);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
-  }, [currentSection, section, validateSection]);
+  }, [safeCurrentSection, section, validateSection, visibleSections.length]);
 
   const goPrev = useCallback(() => {
-    if (currentSection > 0) {
-      setCurrentSection((prev) => prev - 1);
+    if (safeCurrentSection > 0) {
+      setCurrentSection(safeCurrentSection - 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [currentSection]);
+  }, [safeCurrentSection]);
 
   const handleSubmit = useCallback(async () => {
     if (!validateSection(section)) return;
@@ -47,7 +62,7 @@ function App() {
     await new Promise((resolve) => setTimeout(resolve, 1200));
 
     const payload = {};
-    SECTIONS.forEach((s) => {
+    visibleSections.forEach((s) => {
       s.fields.forEach((field) => {
         const value = formData[field.id];
         payload[field.id] = field.type === 'file' && value ? value.name : value;
@@ -57,13 +72,31 @@ function App() {
 
     setIsSubmitting(false);
     setIsSubmitted(true);
-  }, [formData, section, validateSection]);
+  }, [formData, section, validateSection, visibleSections]);
 
   const handleReset = useCallback(() => {
     resetForm();
     setCurrentSection(0);
     setIsSubmitted(false);
   }, [resetForm]);
+
+  // Compute progress based on visible sections only
+  const filledCount = useMemo(() => {
+    return visibleSections.reduce((acc, sec) => {
+      return acc + sec.fields.filter((field) => {
+        const value = formData[field.id];
+        if (field.type === 'checkbox') return value && value.length > 0;
+        if (field.type === 'file') return value !== null;
+        return value && value.toString().trim() !== '';
+      }).length;
+    }, 0);
+  }, [formData, visibleSections]);
+
+  const totalVisibleFields = useMemo(() => {
+    return visibleSections.reduce((acc, sec) => acc + sec.fields.length, 0);
+  }, [visibleSections]);
+
+  const progress = totalVisibleFields > 0 ? (filledCount / totalVisibleFields) * 100 : 0;
 
   return (
     <div className="min-h-screen bg-[#f0ebf8]">
@@ -83,7 +116,7 @@ function App() {
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-normal text-white mb-1 relative z-10">
-            Client Onboarding & Project Details
+            Client Onboarding &amp; Project Details
           </h1>
           <p className="text-sm text-white/70 relative z-10">
             Please fill out this form to help us understand your requirements and securely collect necessary credentials for your project. Your information will be kept strictly confidential.
@@ -97,7 +130,44 @@ function App() {
           <div className="flex-1 min-w-0">
             {/* Progress bar */}
             <div className="bg-white rounded-t-none border-t-0 border border-[#dadce0] px-6 sm:px-10 pt-4 pb-2 rounded-b-lg shadow-sm">
-              <ProgressBar currentSection={currentSection} formData={formData} />
+              {/* Inline progress bar */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-[#5f6368]">
+                    Page <span className="font-medium text-[#202124]">{safeCurrentSection + 1}</span> of {visibleSections.length}
+                  </span>
+                  <span className="text-[#dadce0]">|</span>
+                  <span className="text-xs text-[#5f6368]">
+                    <span className="font-medium text-[#202124]">{filledCount}</span> of {totalVisibleFields} answered
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-32 h-1 bg-[#e8e0f0] rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-[#673ab7] rounded-full transition-all duration-500 ease-out"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-[#673ab7]">
+                    {Math.round(progress)}%
+                  </span>
+                </div>
+              </div>
+
+              {/* Selected services chips */}
+              {formData.servicesRequired && formData.servicesRequired.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-3 pt-2 border-t border-[#f0ebf8]">
+                  {formData.servicesRequired.map((service) => (
+                    <span
+                      key={service}
+                      className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#f0ebf8] text-[#673ab7] border border-[#e8e0f0]"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#673ab7]" />
+                      {service}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Section content */}
@@ -115,9 +185,9 @@ function App() {
               <div className="flex items-center justify-between mt-8 pt-6 border-t border-[#e8e0f0]">
                 <button
                   onClick={goPrev}
-                  disabled={currentSection === 0}
+                  disabled={safeCurrentSection === 0}
                   className={`px-6 py-2 rounded-sm text-sm font-medium transition-colors duration-150 ${
-                    currentSection === 0
+                    safeCurrentSection === 0
                       ? 'text-[#9aa0a6] cursor-not-allowed'
                       : 'text-[#673ab7] hover:bg-[#f0ebf8]'
                   }`}
@@ -126,10 +196,10 @@ function App() {
                 </button>
 
                 <span className="text-xs text-[#9aa0a6]">
-                  {currentSection + 1} of {SECTIONS.length}
+                  {safeCurrentSection + 1} of {visibleSections.length}
                 </span>
 
-                {currentSection < SECTIONS.length - 1 ? (
+                {safeCurrentSection < visibleSections.length - 1 ? (
                   <button
                     onClick={goNext}
                     className="px-6 py-2 rounded-sm text-sm font-medium bg-[#673ab7] text-white hover:bg-[#5e35b1] transition-colors duration-150"
@@ -174,12 +244,13 @@ function App() {
             </div>
           </div>
 
-          {/* Sidebar */}
+          {/* Sidebar - only show visible sections */}
           <div className="mt-6 lg:mt-0">
             <Sidebar
-              currentSection={currentSection}
-              onSectionClick={setCurrentSection}
+              currentSection={safeCurrentSection}
+              onSectionClick={handleSectionClick}
               getSectionCompletion={getSectionCompletion}
+              visibleSections={visibleSections}
             />
           </div>
         </div>
@@ -191,6 +262,7 @@ function App() {
           formData={formData}
           onReset={handleReset}
           onClose={() => setIsSubmitted(false)}
+          visibleSections={visibleSections}
         />
       )}
     </div>
