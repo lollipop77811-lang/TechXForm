@@ -1,12 +1,4 @@
 export default function FormField({ field, value, error, onChange, onCheckboxChange, onFileChange }) {
-  const baseInputClass =
-    'w-full px-4 py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200';
-
-  const errorInputClass =
-    'w-full px-4 py-3 bg-slate-800/50 border border-red-500/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all duration-200';
-
-  const inputClass = error ? errorInputClass : baseInputClass;
-
   const renderField = () => {
     switch (field.type) {
       case 'text':
@@ -20,7 +12,9 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
             value={value || ''}
             onChange={(e) => onChange(field.id, e.target.value)}
             placeholder={field.placeholder}
-            className={inputClass}
+            className={`w-full border-b-2 bg-transparent py-2 px-0 text-[#202124] text-sm placeholder-[#9aa0a6] focus:outline-none transition-colors duration-200 ${
+              error ? 'border-[#d93025]' : 'border-[#dadce0] focus:border-[#673ab7]'
+            }`}
           />
         );
 
@@ -32,7 +26,9 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
             value={value || ''}
             onChange={(e) => onChange(field.id, e.target.value)}
             placeholder={field.placeholder}
-            className={inputClass}
+            className={`w-full border-b-2 bg-transparent py-2 px-0 text-[#202124] text-sm placeholder-[#9aa0a6] focus:outline-none transition-colors duration-200 ${
+              error ? 'border-[#d93025]' : 'border-[#dadce0] focus:border-[#673ab7]'
+            }`}
           />
         );
 
@@ -43,41 +39,43 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
             value={value || ''}
             onChange={(e) => onChange(field.id, e.target.value)}
             placeholder={field.placeholder}
-            rows={4}
-            className={`${inputClass} resize-y min-h-[100px]`}
+            rows={3}
+            className={`w-full border-b-2 bg-transparent py-2 px-0 text-[#202124] text-sm placeholder-[#9aa0a6] focus:outline-none resize-y min-h-[72px] transition-colors duration-200 ${
+              error ? 'border-[#d93025]' : 'border-[#dadce0] focus:border-[#673ab7]'
+            }`}
           />
         );
 
       case 'radio':
         return (
-          <div className="flex flex-wrap gap-3">
+          <div className="space-y-2">
             {field.options.map((option) => (
               <label
                 key={option}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl border cursor-pointer transition-all duration-200 ${
-                  value === option
-                    ? 'bg-blue-600/20 border-blue-500/50 text-blue-300'
-                    : 'bg-slate-800/30 border-slate-600/30 text-slate-300 hover:bg-slate-700/30 hover:border-slate-500/50'
-                }`}
+                className="flex items-center gap-3 py-1.5 px-2 rounded-md cursor-pointer hover:bg-[#f0ebf8] transition-colors duration-150"
               >
-                <input
-                  type="radio"
-                  name={field.id}
-                  value={option}
-                  checked={value === option}
-                  onChange={(e) => onChange(field.id, e.target.value)}
-                  className="sr-only"
-                />
-                <span
-                  className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
-                    value === option ? 'border-blue-400' : 'border-slate-500'
-                  }`}
-                >
-                  {value === option && (
-                    <span className="w-2 h-2 rounded-full bg-blue-400" />
-                  )}
+                <span className="relative flex items-center justify-center">
+                  <input
+                    type="radio"
+                    name={field.id}
+                    value={option}
+                    checked={value === option}
+                    onChange={(e) => onChange(field.id, e.target.value)}
+                    className="sr-only"
+                  />
+                  <span
+                    className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
+                      value === option
+                        ? 'border-[#673ab7]'
+                        : 'border-[#5f6368]'
+                    }`}
+                  >
+                    {value === option && (
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#673ab7]" />
+                    )}
+                  </span>
                 </span>
-                <span className="text-sm font-medium">{option}</span>
+                <span className="text-sm text-[#202124]">{option}</span>
               </label>
             ))}
           </div>
@@ -85,38 +83,38 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
 
       case 'checkbox':
         return (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="space-y-2">
             {field.options.map((option) => {
               const isChecked = (value || []).includes(option);
               return (
                 <label
                   key={option}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl border cursor-pointer transition-all duration-200 ${
-                    isChecked
-                      ? 'bg-blue-600/20 border-blue-500/50 text-blue-300'
-                      : 'bg-slate-800/30 border-slate-600/30 text-slate-300 hover:bg-slate-700/30 hover:border-slate-500/50'
-                  }`}
+                  className="flex items-center gap-3 py-1.5 px-2 rounded-md cursor-pointer hover:bg-[#f0ebf8] transition-colors duration-150"
                 >
-                  <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={(e) =>
-                      onCheckboxChange(field.id, option, e.target.checked)
-                    }
-                    className="sr-only"
-                  />
-                  <span
-                    className={`w-4 h-4 rounded-md border-2 flex items-center justify-center transition-all duration-200 ${
-                      isChecked ? 'border-blue-400 bg-blue-500' : 'border-slate-500'
-                    }`}
-                  >
-                    {isChecked && (
-                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    )}
+                  <span className="relative flex items-center justify-center">
+                    <input
+                      type="checkbox"
+                      checked={isChecked}
+                      onChange={(e) =>
+                        onCheckboxChange(field.id, option, e.target.checked)
+                      }
+                      className="sr-only"
+                    />
+                    <span
+                      className={`w-5 h-5 rounded-sm border-2 flex items-center justify-center transition-all duration-200 ${
+                        isChecked
+                          ? 'border-[#673ab7] bg-[#673ab7]'
+                          : 'border-[#5f6368]'
+                      }`}
+                    >
+                      {isChecked && (
+                        <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                    </span>
                   </span>
-                  <span className="text-sm font-medium">{option}</span>
+                  <span className="text-sm text-[#202124]">{option}</span>
                 </label>
               );
             })}
@@ -135,16 +133,13 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
             />
             <label
               htmlFor={field.id}
-              className="flex flex-col items-center justify-center w-full py-8 border-2 border-dashed border-slate-600/50 rounded-xl cursor-pointer hover:border-blue-500/50 hover:bg-slate-800/30 transition-all duration-200"
+              className="flex flex-col items-center justify-center w-full py-8 border-2 border-dashed border-[#dadce0] rounded-lg cursor-pointer hover:border-[#673ab7] hover:bg-[#f0ebf8] transition-all duration-200"
             >
-              <svg className="w-8 h-8 mb-2 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+              <svg className="w-10 h-10 mb-2 text-[#5f6368]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
-              <span className="text-sm text-slate-400">
-                {value ? value.name : 'Click to upload or drag and drop'}
-              </span>
-              <span className="text-xs text-slate-500 mt-1">
-                {field.accept ? `Supported: ${field.accept}` : 'Any file type'}
+              <span className="text-sm text-[#5f6368]">
+                {value ? value.name : 'Drag and drop a file or click to browse'}
               </span>
             </label>
           </div>
@@ -156,23 +151,21 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
   };
 
   return (
-    <div className="mb-5">
+    <div className="mb-6">
       <label
-        htmlFor={field.id}
-        className="block text-sm font-medium text-slate-200 mb-2"
+        htmlFor={field.type !== 'radio' && field.type !== 'checkbox' ? field.id : undefined}
+        className="block text-sm font-normal text-[#202124] mb-1"
       >
-        <span className="flex items-center gap-2">
-          {field.label}
-          {field.required && (
-            <span className="text-red-400 text-xs">*</span>
-          )}
-        </span>
+        {field.label}
+        {field.required && (
+          <span className="text-[#d93025] ml-1">*</span>
+        )}
       </label>
       {renderField()}
       {error && (
-        <p className="mt-1.5 text-sm text-red-400 flex items-center gap-1">
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+        <p className="mt-1 text-xs text-[#d93025] flex items-center gap-1">
+          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
           </svg>
           {error}
         </p>

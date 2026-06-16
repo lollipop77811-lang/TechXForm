@@ -60,65 +60,65 @@ const iconMap = {
 
 export default function Sidebar({ currentSection, onSectionClick, getSectionCompletion }) {
   return (
-    <div className="w-full lg:w-80 shrink-0">
-      <div className="sticky top-6">
-        <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-5">
-          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">
-            Form Sections
-          </h3>
-          <nav className="space-y-1">
+    <div className="w-full lg:w-72 shrink-0">
+      <div className="lg:sticky lg:top-6">
+        <div className="bg-white rounded-lg shadow-sm border border-[#dadce0] overflow-hidden">
+          {/* Sidebar header */}
+          <div className="px-4 py-3 bg-[#673ab7]">
+            <h3 className="text-xs font-medium text-white/90 uppercase tracking-wider">
+              Sections
+            </h3>
+          </div>
+          <nav className="p-1">
             {SECTIONS.map((section, index) => {
               const { filled, total } = getSectionCompletion(section);
               const isActive = currentSection === index;
               const isComplete = filled === total && total > 0;
-              const progress = total > 0 ? (filled / total) * 100 : 0;
 
               return (
                 <button
                   key={section.id}
                   onClick={() => onSectionClick(index)}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-200 group ${
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-left transition-all duration-150 group ${
                     isActive
-                      ? 'bg-blue-600/15 text-blue-300'
-                      : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
+                      ? 'bg-[#f0ebf8] text-[#673ab7]'
+                      : 'text-[#5f6368] hover:bg-[#f8f9fa] hover:text-[#202124]'
                   }`}
                 >
                   <span
                     className={`shrink-0 ${
-                      isActive ? 'text-blue-400' : isComplete ? 'text-emerald-400' : 'text-slate-500 group-hover:text-slate-400'
+                      isActive ? 'text-[#673ab7]' : isComplete ? 'text-[#1e8e3e]' : 'text-[#9aa0a6] group-hover:text-[#5f6368]'
                     }`}
                   >
                     {iconMap[section.icon] || iconMap.clipboard}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium truncate">
-                        {section.title}
-                      </span>
-                      {isComplete && !isActive && (
-                        <svg className="w-4 h-4 text-emerald-400 shrink-0 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="flex-1 h-1 bg-slate-700/50 rounded-full overflow-hidden">
+                    <span className="text-xs font-medium block truncate">
+                      {section.title}
+                    </span>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <div className="flex-1 h-0.5 bg-[#e8e0f0] rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all duration-500 ${
                             isComplete
-                              ? 'bg-emerald-400'
+                              ? 'bg-[#1e8e3e]'
                               : isActive
-                              ? 'bg-blue-400'
-                              : 'bg-slate-500'
+                              ? 'bg-[#673ab7]'
+                              : 'bg-[#9aa0a6]'
                           }`}
-                          style={{ width: `${progress}%` }}
+                          style={{ width: `${total > 0 ? (filled / total) * 100 : 0}%` }}
                         />
                       </div>
-                      <span className="text-xs text-slate-500 shrink-0">
+                      <span className="text-[10px] text-[#9aa0a6] shrink-0">
                         {filled}/{total}
                       </span>
                     </div>
                   </div>
+                  {isComplete && !isActive && (
+                    <svg className="w-3.5 h-3.5 text-[#1e8e3e] shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  )}
                 </button>
               );
             })}
