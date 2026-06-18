@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TechX mark only (no wordmark) - for use in tight spaces like favicons, modal icons, etc. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="tx-mark-grad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0F2A5C"/>
+      <stop offset="55%" stop-color="#0A86E8"/>
+      <stop offset="100%" stop-color="#5AC8FA"/>
+    </linearGradient>
+    <linearGradient id="tx-mark-grad-soft" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0A86E8"/>
+      <stop offset="100%" stop-color="#5AC8FA"/>
+    </linearGradient>
+    <radialGradient id="tx-mark-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#5AC8FA" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#5AC8FA" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Soft glow -->
+  <circle cx="32" cy="32" r="30" fill="url(#tx-mark-glow)"/>
+
+  <!-- Outer hexagon -->
+  <path d="M32 4 L56 18 L56 46 L32 60 L8 46 L8 18 Z"
+        stroke="url(#tx-mark-grad)"
+        stroke-width="1.4"
+        fill="none"
+        opacity="0.55"/>
+
+  <!-- Inner hexagon -->
+  <path d="M32 11 L50 21.5 L50 42.5 L32 53 L14 42.5 L14 21.5 Z"
+        stroke="url(#tx-mark-grad-soft)"
+        stroke-width="0.9"
+        fill="none"
+        opacity="0.4"/>
+
+  <!-- Trend lines (squiggles) -->
+  <path d="M14 38 L20 36 L24 39 L28 34 L32 31"
+        stroke="#5AC8FA"
+        stroke-width="1.3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="none"
+        opacity="0.85"/>
+  <path d="M14 42 L19 41 L23 43 L27 39 L32 35"
+        stroke="#0A86E8"
+        stroke-width="1.1"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="none"
+        opacity="0.7"/>
+
+  <!-- Main upward arrow -->
+  <path d="M32 14 L40 24 L35 24 L35 38 L29 38 L29 24 L24 24 Z"
+        fill="url(#tx-mark-grad)"/>
+
+  <!-- Arrow highlight -->
+  <path d="M32 14 L40 24 L35 24 L35 38 L32 38 Z"
+        fill="#5AC8FA"
+        opacity="0.18"/>
+
+  <!-- Polar arcs -->
+  <path d="M18 28 A 16 16 0 0 1 46 28"
+        stroke="#0A86E8"
+        stroke-width="0.8"
+        fill="none"
+        opacity="0.35"/>
+  <path d="M20 36 A 12 12 0 0 1 44 36"
+        stroke="#5AC8FA"
+        stroke-width="0.6"
+        fill="none"
+        opacity="0.3"/>
+
+  <!-- Vertex dots -->
+  <circle cx="32" cy="4"  r="1.6" fill="#5AC8FA"/>
+  <circle cx="56" cy="18" r="1.6" fill="#0A86E8"/>
+  <circle cx="56" cy="46" r="1.6" fill="#0A86E8"/>
+  <circle cx="32" cy="60" r="1.6" fill="#5AC8FA"/>
+  <circle cx="8"  cy="46" r="1.6" fill="#0A86E8"/>
+  <circle cx="8"  cy="18" r="1.6" fill="#5AC8FA"/>
+
+  <!-- Midpoint dots -->
+  <circle cx="32" cy="11" r="0.9" fill="#5AC8FA" opacity="0.8"/>
+  <circle cx="50" cy="32" r="0.9" fill="#0A86E8" opacity="0.8"/>
+  <circle cx="32" cy="53" r="0.9" fill="#5AC8FA" opacity="0.8"/>
+  <circle cx="14" cy="32" r="0.9" fill="#0A86E8" opacity="0.8"/>
+</svg>

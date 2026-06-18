@@ -13,7 +13,19 @@ export default function SuccessModal({ formData, onClose, onReset, visibleSectio
   return (
     <div className="fixed inset-0 bg-[#0F2A5C]/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl border border-[#DCE6F0] max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        {/* TechX brand bar across the top of the modal */}
+        <div className="bg-gradient-to-r from-[#0F2A5C] to-[#0A86E8] h-1.5 rounded-t-2xl" />
+
         <div className="p-8 text-center">
+          {/* TechX logo */}
+          <div className="flex items-center justify-center mb-4">
+            <img
+              src="/techx-logo.svg"
+              alt="TechX IT Services"
+              className="h-12 w-auto drop-shadow-[0_2px_8px_rgba(10,134,232,0.18)]"
+            />
+          </div>
+
           {/* TechX brand success icon */}
           <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#0F2A5C] to-[#0A86E8] flex items-center justify-center mx-auto mb-5 shadow-lg shadow-[#0A86E8]/30">
             <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
