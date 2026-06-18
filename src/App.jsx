@@ -111,9 +111,9 @@ function App() {
             title="Visit TechX IT Services"
           >
             <img
-              src="/techx-logo.svg"
+              src="/techx-logo.png"
               alt="TechX IT Services"
-              className="h-10 w-auto transition-transform duration-300 group-hover:scale-[1.03] drop-shadow-[0_2px_8px_rgba(10,134,232,0.18)]"
+              className="h-12 w-auto transition-transform duration-300 group-hover:scale-[1.03]"
             />
           </a>
           <a
