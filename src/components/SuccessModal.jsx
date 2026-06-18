@@ -20,9 +20,9 @@ export default function SuccessModal({ formData, onClose, onReset, visibleSectio
           {/* TechX logo */}
           <div className="flex items-center justify-center mb-4">
             <img
-              src="/techx-logo.svg"
+              src="/techx-logo.png"
               alt="TechX IT Services"
-              className="h-12 w-auto drop-shadow-[0_2px_8px_rgba(10,134,232,0.18)]"
+              className="h-16 w-auto"
             />
           </div>
 
