@@ -12,8 +12,8 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
             value={value || ''}
             onChange={(e) => onChange(field.id, e.target.value)}
             placeholder={field.placeholder}
-            className={`w-full border-b-2 bg-transparent py-2 px-0 text-[#202124] text-sm placeholder-[#9aa0a6] focus:outline-none transition-colors duration-200 ${
-              error ? 'border-[#d93025]' : 'border-[#dadce0] focus:border-[#673ab7]'
+            className={`w-full border-b-2 bg-transparent py-2 px-0 text-[#0B1424] text-sm placeholder-[#9CA3AF] focus:outline-none transition-colors duration-200 ${
+              error ? 'border-[#DC2626]' : 'border-[#DCE6F0] focus:border-[#0A86E8]'
             }`}
           />
         );
@@ -26,8 +26,8 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
             value={value || ''}
             onChange={(e) => onChange(field.id, e.target.value)}
             placeholder={field.placeholder}
-            className={`w-full border-b-2 bg-transparent py-2 px-0 text-[#202124] text-sm placeholder-[#9aa0a6] focus:outline-none transition-colors duration-200 ${
-              error ? 'border-[#d93025]' : 'border-[#dadce0] focus:border-[#673ab7]'
+            className={`w-full border-b-2 bg-transparent py-2 px-0 text-[#0B1424] text-sm placeholder-[#9CA3AF] focus:outline-none transition-colors duration-200 ${
+              error ? 'border-[#DC2626]' : 'border-[#DCE6F0] focus:border-[#0A86E8]'
             }`}
           />
         );
@@ -40,8 +40,8 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
             onChange={(e) => onChange(field.id, e.target.value)}
             placeholder={field.placeholder}
             rows={3}
-            className={`w-full border-b-2 bg-transparent py-2 px-0 text-[#202124] text-sm placeholder-[#9aa0a6] focus:outline-none resize-y min-h-[72px] transition-colors duration-200 ${
-              error ? 'border-[#d93025]' : 'border-[#dadce0] focus:border-[#673ab7]'
+            className={`w-full border-b-2 bg-transparent py-2 px-0 text-[#0B1424] text-sm placeholder-[#9CA3AF] focus:outline-none resize-y min-h-[72px] transition-colors duration-200 ${
+              error ? 'border-[#DC2626]' : 'border-[#DCE6F0] focus:border-[#0A86E8]'
             }`}
           />
         );
@@ -52,7 +52,7 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
             {field.options.map((option) => (
               <label
                 key={option}
-                className="flex items-center gap-3 py-1.5 px-2 rounded-md cursor-pointer hover:bg-[#f0ebf8] transition-colors duration-150"
+                className="flex items-center gap-3 py-1.5 px-2 rounded-md cursor-pointer hover:bg-[#EEF4FA] transition-colors duration-150"
               >
                 <span className="relative flex items-center justify-center">
                   <input
@@ -66,16 +66,16 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
                   <span
                     className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
                       value === option
-                        ? 'border-[#673ab7]'
-                        : 'border-[#5f6368]'
+                        ? 'border-[#0A86E8]'
+                        : 'border-[#69788E]'
                     }`}
                   >
                     {value === option && (
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#673ab7]" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#0A86E8]" />
                     )}
                   </span>
                 </span>
-                <span className="text-sm text-[#202124]">{option}</span>
+                <span className="text-sm text-[#0B1424]">{option}</span>
               </label>
             ))}
           </div>
@@ -89,7 +89,7 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
               return (
                 <label
                   key={option}
-                  className="flex items-center gap-3 py-1.5 px-2 rounded-md cursor-pointer hover:bg-[#f0ebf8] transition-colors duration-150"
+                  className="flex items-center gap-3 py-1.5 px-2 rounded-md cursor-pointer hover:bg-[#EEF4FA] transition-colors duration-150"
                 >
                   <span className="relative flex items-center justify-center">
                     <input
@@ -103,8 +103,8 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
                     <span
                       className={`w-5 h-5 rounded-sm border-2 flex items-center justify-center transition-all duration-200 ${
                         isChecked
-                          ? 'border-[#673ab7] bg-[#673ab7]'
-                          : 'border-[#5f6368]'
+                          ? 'border-[#0A86E8] bg-[#0A86E8]'
+                          : 'border-[#69788E]'
                       }`}
                     >
                       {isChecked && (
@@ -114,7 +114,7 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
                       )}
                     </span>
                   </span>
-                  <span className="text-sm text-[#202124]">{option}</span>
+                  <span className="text-sm text-[#0B1424]">{option}</span>
                 </label>
               );
             })}
@@ -133,12 +133,12 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
             />
             <label
               htmlFor={field.id}
-              className="flex flex-col items-center justify-center w-full py-8 border-2 border-dashed border-[#dadce0] rounded-lg cursor-pointer hover:border-[#673ab7] hover:bg-[#f0ebf8] transition-all duration-200"
+              className="flex flex-col items-center justify-center w-full py-8 border-2 border-dashed border-[#DCE6F0] rounded-lg cursor-pointer hover:border-[#0A86E8] hover:bg-[#EEF4FA] transition-all duration-200"
             >
-              <svg className="w-10 h-10 mb-2 text-[#5f6368]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+              <svg className="w-10 h-10 mb-2 text-[#0A86E8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
               </svg>
-              <span className="text-sm text-[#5f6368]">
+              <span className="text-sm text-[#69788E]">
                 {value ? value.name : 'Drag and drop a file or click to browse'}
               </span>
             </label>
@@ -154,16 +154,17 @@ export default function FormField({ field, value, error, onChange, onCheckboxCha
     <div className="mb-6">
       <label
         htmlFor={field.type !== 'radio' && field.type !== 'checkbox' ? field.id : undefined}
-        className="block text-sm font-normal text-[#202124] mb-1"
+        className="block text-sm font-medium text-[#0F2A5C] mb-1"
+        style={{ fontFamily: 'Sora, system-ui, sans-serif' }}
       >
         {field.label}
         {field.required && (
-          <span className="text-[#d93025] ml-1">*</span>
+          <span className="text-[#DC2626] ml-1">*</span>
         )}
       </label>
       {renderField()}
       {error && (
-        <p className="mt-1 text-xs text-[#d93025] flex items-center gap-1">
+        <p className="mt-1 text-xs text-[#DC2626] flex items-center gap-1">
           <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
           </svg>

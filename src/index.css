@@ -15,43 +15,57 @@
   to { opacity: 1; transform: translateX(0); }
 }
 
-/* Google Forms-like scrollbar */
+/* TechX IT Services brand theme
+   Primary:   #0F2A5C (navy)
+   Accent:    #0A86E8 (bright blue)
+   BG:        #FAFCFE (off-white)
+   Foreground:#0B1424
+   Card:      #FFFFFF
+   Secondary: #EEF4FA
+   Border:    #DCE6F0
+   Muted:     #69788E
+*/
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f0ebf8;
+  background: #EEF4FA;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c4b5e0;
+  background: #B6CFE6;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9b82c9;
+  background: #0A86E8;
 }
 
 * {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Remove autofill background */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px #fff inset;
-  -webkit-text-fill-color: #202124;
+  -webkit-text-fill-color: #0B1424;
   transition: background-color 5000s ease-in-out 0s;
 }
 
 ::selection {
-  background-color: rgba(103, 58, 183, 0.15);
-  color: #202124;
+  background-color: rgba(10, 134, 232, 0.18);
+  color: #0B1424;
 }
 
 body {
-  font-family: 'Google Sans', 'Roboto', 'Arial', sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #0B1424;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Sora', 'Inter', system-ui, sans-serif;
 }

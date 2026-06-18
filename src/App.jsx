@@ -2,7 +2,6 @@ import { useState, useCallback, useMemo } from 'react';
 import { SECTIONS, getVisibleSections } from './data/formSchema';
 import { useFormState } from './hooks/useFormState';
 import Sidebar from './components/Sidebar';
-import ProgressBar from './components/ProgressBar';
 import FormSection from './components/FormSection';
 import SuccessModal from './components/SuccessModal';
 
@@ -28,11 +27,9 @@ function App() {
     return getVisibleSections(selected);
   }, [formData.servicesRequired]);
 
-  // Make sure currentSection is valid when sections change
   const safeCurrentSection = Math.min(currentSection, visibleSections.length - 1);
   const section = visibleSections[safeCurrentSection];
 
-  // When services change, clamp the current section index
   const handleSectionClick = useCallback((index) => {
     if (index < visibleSections.length) {
       setCurrentSection(index);
@@ -99,29 +96,65 @@ function App() {
   const progress = totalVisibleFields > 0 ? (filledCount / totalVisibleFields) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-[#f0ebf8]">
-      {/* ── Google Forms top purple bar ── */}
-      <header className="bg-[#673ab7] h-3 w-full" />
+    <div className="min-h-screen bg-[#FAFCFE]">
+      {/* ── TechX top accent bar ── */}
+      <header className="bg-gradient-to-r from-[#0F2A5C] to-[#0A86E8] h-2 w-full" />
+
+      {/* ── Brand bar (TechX IT Services header) ── */}
+      <div className="bg-white border-b border-[#DCE6F0]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0F2A5C] to-[#0A86E8] flex items-center justify-center shadow-md shadow-[#0A86E8]/20">
+              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-base font-semibold text-[#0F2A5C] tracking-tight" style={{ fontFamily: 'Sora, system-ui, sans-serif' }}>
+                TechX IT Services
+              </h1>
+              <p className="text-xs text-[#69788E]">Client Onboarding Portal</p>
+            </div>
+          </div>
+          <a
+            href="https://techxitservices.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:flex items-center gap-1.5 text-xs text-[#69788E] hover:text-[#0A86E8] transition-colors"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+            Visit Website
+          </a>
+        </div>
+      </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-0">
-        {/* ── Form title card (Google Forms style) ── */}
-        <div className="bg-[#673ab7] rounded-t-lg mt-6 px-6 sm:px-10 py-8 relative overflow-hidden">
+        {/* ── Form title card (TechX gradient header) ── */}
+        <div className="bg-gradient-to-br from-[#0F2A5C] to-[#0A86E8] rounded-t-lg mt-6 px-6 sm:px-10 py-8 relative overflow-hidden shadow-lg shadow-[#0F2A5C]/15">
           {/* Decorative pattern */}
-          <div className="absolute top-0 right-0 w-40 h-40 opacity-10">
+          <div className="absolute top-0 right-0 w-48 h-48 opacity-10">
             <svg viewBox="0 0 100 100" fill="none">
               <circle cx="80" cy="20" r="60" stroke="white" strokeWidth="0.5" />
               <circle cx="90" cy="30" r="40" stroke="white" strokeWidth="0.5" />
               <circle cx="70" cy="10" r="30" stroke="white" strokeWidth="0.5" />
+              <circle cx="60" cy="40" r="20" stroke="white" strokeWidth="0.5" />
             </svg>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-normal text-white mb-1 relative z-10">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur text-white/90 text-xs font-medium mb-3 relative z-10">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#5AC8FA] animate-pulse" />
+            New Client Onboarding
+          </div>
+
+          <h1 className="text-2xl sm:text-3xl font-semibold text-white mb-1 relative z-10" style={{ fontFamily: 'Sora, system-ui, sans-serif' }}>
             Client Onboarding &amp; Project Details
           </h1>
-          <p className="text-sm text-white/70 relative z-10">
+          <p className="text-sm text-white/75 relative z-10 max-w-2xl">
             Please fill out this form to help us understand your requirements and securely collect necessary credentials for your project. Your information will be kept strictly confidential.
           </p>
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#e8e0f0]" />
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#5AC8FA] to-[#0A86E8]" />
         </div>
 
         {/* ── Main form area ── */}
@@ -129,26 +162,25 @@ function App() {
           {/* Form card */}
           <div className="flex-1 min-w-0">
             {/* Progress bar */}
-            <div className="bg-white rounded-t-none border-t-0 border border-[#dadce0] px-6 sm:px-10 pt-4 pb-2 rounded-b-lg shadow-sm">
-              {/* Inline progress bar */}
+            <div className="bg-white rounded-t-none border-t-0 border border-[#DCE6F0] px-6 sm:px-10 pt-4 pb-2 rounded-b-lg shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <span className="text-xs text-[#5f6368]">
-                    Page <span className="font-medium text-[#202124]">{safeCurrentSection + 1}</span> of {visibleSections.length}
+                  <span className="text-xs text-[#69788E]">
+                    Page <span className="font-semibold text-[#0F2A5C]">{safeCurrentSection + 1}</span> of {visibleSections.length}
                   </span>
-                  <span className="text-[#dadce0]">|</span>
-                  <span className="text-xs text-[#5f6368]">
-                    <span className="font-medium text-[#202124]">{filledCount}</span> of {totalVisibleFields} answered
+                  <span className="text-[#DCE6F0]">|</span>
+                  <span className="text-xs text-[#69788E]">
+                    <span className="font-semibold text-[#0F2A5C]">{filledCount}</span> of {totalVisibleFields} answered
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-32 h-1 bg-[#e8e0f0] rounded-full overflow-hidden">
+                  <div className="w-32 h-1 bg-[#EEF4FA] rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-[#673ab7] rounded-full transition-all duration-500 ease-out"
+                      className="h-full bg-gradient-to-r from-[#0F2A5C] to-[#0A86E8] rounded-full transition-all duration-500 ease-out"
                       style={{ width: `${progress}%` }}
                     />
                   </div>
-                  <span className="text-xs font-medium text-[#673ab7]">
+                  <span className="text-xs font-semibold text-[#0A86E8]">
                     {Math.round(progress)}%
                   </span>
                 </div>
@@ -156,13 +188,13 @@ function App() {
 
               {/* Selected services chips */}
               {formData.servicesRequired && formData.servicesRequired.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 mt-3 pt-2 border-t border-[#f0ebf8]">
+                <div className="flex flex-wrap gap-1.5 mt-3 pt-2 border-t border-[#EEF4FA]">
                   {formData.servicesRequired.map((service) => (
                     <span
                       key={service}
-                      className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#f0ebf8] text-[#673ab7] border border-[#e8e0f0]"
+                      className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#EEF4FA] text-[#0F2A5C] border border-[#DCE6F0]"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#673ab7]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#0A86E8]" />
                       {service}
                     </span>
                   ))}
@@ -171,7 +203,7 @@ function App() {
             </div>
 
             {/* Section content */}
-            <div className="bg-white border border-t-0 border-[#dadce0] mt-0 px-6 sm:px-10 py-6 rounded-b-lg shadow-sm">
+            <div className="bg-white border border-t-0 border-[#DCE6F0] mt-0 px-6 sm:px-10 py-6 rounded-b-lg shadow-sm">
               <FormSection
                 section={section}
                 formData={formData}
@@ -181,70 +213,81 @@ function App() {
                 onFileChange={handleFileChange}
               />
 
-              {/* Navigation buttons - Google Forms style */}
-              <div className="flex items-center justify-between mt-8 pt-6 border-t border-[#e8e0f0]">
+              {/* Navigation buttons */}
+              <div className="flex items-center justify-between mt-8 pt-6 border-t border-[#EEF4FA]">
                 <button
                   onClick={goPrev}
                   disabled={safeCurrentSection === 0}
-                  className={`px-6 py-2 rounded-sm text-sm font-medium transition-colors duration-150 ${
+                  className={`flex items-center gap-1.5 px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     safeCurrentSection === 0
-                      ? 'text-[#9aa0a6] cursor-not-allowed'
-                      : 'text-[#673ab7] hover:bg-[#f0ebf8]'
+                      ? 'text-[#B6CFE6] cursor-not-allowed'
+                      : 'text-[#0F2A5C] hover:bg-[#EEF4FA] border border-[#DCE6F0]'
                   }`}
                 >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                  </svg>
                   Back
                 </button>
 
-                <span className="text-xs text-[#9aa0a6]">
+                <span className="text-xs text-[#69788E]">
                   {safeCurrentSection + 1} of {visibleSections.length}
                 </span>
 
                 {safeCurrentSection < visibleSections.length - 1 ? (
                   <button
                     onClick={goNext}
-                    className="px-6 py-2 rounded-sm text-sm font-medium bg-[#673ab7] text-white hover:bg-[#5e35b1] transition-colors duration-150"
+                    className="flex items-center gap-1.5 px-5 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-[#0F2A5C] to-[#0A86E8] text-white hover:shadow-lg hover:shadow-[#0A86E8]/30 transition-all duration-200"
                   >
                     Next
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
                   </button>
                 ) : (
                   <button
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className={`px-6 py-2 rounded-sm text-sm font-medium transition-colors duration-150 ${
+                    className={`flex items-center gap-2 px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
                       isSubmitting
-                        ? 'bg-[#9c27b0] text-white/70 cursor-wait'
-                        : 'bg-[#673ab7] text-white hover:bg-[#5e35b1]'
+                        ? 'bg-[#0A86E8] text-white/80 cursor-wait'
+                        : 'bg-gradient-to-r from-[#0F2A5C] to-[#0A86E8] text-white hover:shadow-lg hover:shadow-[#0A86E8]/40'
                     }`}
                   >
                     {isSubmitting ? (
-                      <span className="flex items-center gap-2">
+                      <>
                         <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                         </svg>
                         Submitting...
-                      </span>
+                      </>
                     ) : (
-                      'Submit'
+                      <>
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                        </svg>
+                        Submit Form
+                      </>
                     )}
                   </button>
                 )}
               </div>
             </div>
 
-            {/* Google Forms style footer */}
-            <div className="mt-4 flex items-center justify-between text-xs text-[#9aa0a6] px-1">
-              <span>
-                <svg className="w-3.5 h-3.5 inline mr-1 text-[#9aa0a6]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            {/* Footer */}
+            <div className="mt-4 flex items-center justify-between text-xs text-[#69788E] px-1">
+              <span className="flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5 text-[#0A86E8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                 </svg>
                 Your information is kept confidential
               </span>
-              <span>TechXForm</span>
+              <span>© TechX IT Services</span>
             </div>
           </div>
 
-          {/* Sidebar - only show visible sections */}
+          {/* Sidebar */}
           <div className="mt-6 lg:mt-0">
             <Sidebar
               currentSection={safeCurrentSection}
