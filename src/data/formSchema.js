@@ -25,7 +25,7 @@ export const SECTIONS = [
       { id: 'clientName', label: 'Client Name', type: 'text', required: true, placeholder: 'Enter your full name' },
       { id: 'companyName', label: 'Company Name', type: 'text', required: true, placeholder: 'Enter your company name' },
       { id: 'email', label: 'Email Address', type: 'email', required: true, placeholder: 'you@company.com' },
-      { id: 'phone', label: 'Phone Number', type: 'tel', required: true, placeholder: '+1 (555) 000-0000' },
+      { id: 'phone', label: 'Phone Number', type: 'tel', required: true, placeholder: '+1 (555) 000-0000'  },
       { id: 'businessLocation', label: 'Business Location', type: 'text', required: false, placeholder: 'City, State, Country' },
     ],
   },
